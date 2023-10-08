@@ -1,7 +1,7 @@
-import * as jwt from 'jsonwebtoken';
+import  jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const SECRET_KEY = process.env.SECRET_KEY;
 
 function authenticate(req, res, next) {
   const token = req.headers.authorization;
@@ -15,7 +15,7 @@ function authenticate(req, res, next) {
   const tokenWithoutBearer = token.split(" ")[1];
 
   // Verify token
-  jwt.verify(tokenWithoutBearer, PRIVATE_KEY, (error, decoded) => {
+  jwt.verify(tokenWithoutBearer, SECRET_KEY, (error, decoded) => {
     if (error) {
       return res.status(401).json({
         message: "Invalid token",
