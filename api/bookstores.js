@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', authenticate, async (req, res) => {
   try {
-    const { name, location } = req.body;
+    const { ownerId, name, location } = req.body;
 
     const newbookstore = await prisma.bookstore.create({
       data: {
@@ -26,18 +26,20 @@ router.post('/', authenticate, async (req, res) => {
         name,
         location,
       },
-    });
-
-    res.status(201).json({ 
-      status: 200,
-      data: newbookstore, 
-      message: "Bookstore created" 
-    });
+    })
+    
     if(!newbookstore){
       return res.status(400).json({
         massega: "not created book store"
       })
     }
+
+    res.status(201).json({ 
+      status: 202,
+      data: newbookstore, 
+      message: "Bookstore created" 
+    });
+   
   } catch (error) {
     
     res.status(500).json({ error: 'Failed to create bookstore' });
@@ -47,7 +49,7 @@ router.post('/', authenticate, async (req, res) => {
 router.put('/:id', authenticate, async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, location } = req.body;
+    const { ownerId, name, location } = req.body;
 
     const bookstore = await prisma.bookstore.update({
       where: {

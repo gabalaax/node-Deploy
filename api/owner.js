@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const SECRET_KEY = process.env.SECRET_KEY;
 
 const router = express.Router();
 
@@ -66,7 +66,7 @@ router.post("/login", async (req, res) => {
 
     const token = jwt.sign(
       { id: existingOwner.id, email: existingOwner.email },
-      PRIVATE_KEY,
+      SECRET_KEY,
       { expiresIn: "1h" }
     );
 
